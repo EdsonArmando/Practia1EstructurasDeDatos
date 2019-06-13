@@ -1,0 +1,39 @@
+digraph {
+ rankdir=LR; 
+ node [shape=record];subgraph cluster_0 { 
+  label="Pila Carretas 1"; 
+ struct1 [label ="<f0>4|<f1>3|<f2>2|<f3>1"];
+}
+ subgraph cluster_1 { 
+  label="Pila Carretas 2"; 
+ struct2 [label ="<f0>"];
+}
+ subgraph cluster_2 { 
+  label="Cola Pagar"; 
+ struct3 [label ="<f0>"];
+}
+ subgraph cluster_3 { 
+  label="Cola para Carretas"; 
+ struct4 [label ="<f0>Cliente2|<f1>Cliente3|<f2>Cliente4|<f3>Cliente5"];
+}
+ subgraph cluster_4 { 
+ node [shape=record];
+ label="Cajas de Pago";
+No_Caja_5_Turno7_EstadoLibre -> No_Caja_4_Turno1_EstadoLibre;
+No_Caja_4_Turno1_EstadoLibre -> No_Caja_5_Turno7_EstadoLibre;
+No_Caja_4_Turno1_EstadoLibre -> No_Caja_3_Turno9_EstadoLibre;
+No_Caja_3_Turno9_EstadoLibre -> No_Caja_4_Turno1_EstadoLibre;
+No_Caja_3_Turno9_EstadoLibre -> No_Caja_2_Turno9_EstadoLibre;
+No_Caja_2_Turno9_EstadoLibre -> No_Caja_3_Turno9_EstadoLibre;
+No_Caja_2_Turno9_EstadoLibre -> No_Caja_1_Turno8_EstadoLibre;
+No_Caja_1_Turno8_EstadoLibre -> No_Caja_2_Turno9_EstadoLibre;
+
+}
+ subgraph cluster_5 { 
+ node [shape=record];
+ label="Lista Compras";
+Cliente1_5 -> Cliente1_5;
+Cliente1_5 -> Cliente1_5;
+
+}
+}

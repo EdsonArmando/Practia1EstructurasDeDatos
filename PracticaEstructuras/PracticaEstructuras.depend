@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1560058173 source:c:\users\eg\source\repos\practicaestructuras\practicaestructuras\pch.cpp
+	"pch.h"
+
+1560058173 c:\users\eg\source\repos\practicaestructuras\practicaestructuras\pch.h
+
+1560058191 source:c:\users\eg\source\repos\practicaestructuras\practicaestructuras\practicaestructuras.cpp
+	"pch.h"
+	<iostream>
+
