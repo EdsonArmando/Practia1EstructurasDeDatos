@@ -2,19 +2,19 @@ digraph {
  rankdir=LR; 
  node [shape=record];subgraph cluster_0 { 
   label="Pila Carretas 1"; 
- struct1 [label ="<f0>4|<f1>3|<f2>2|<f3>1"];
+ struct1 [label ="<f0>5|<f1>4|<f2>3|<f3>2|<f4>1"];
 }
  subgraph cluster_1 { 
   label="Pila Carretas 2"; 
- struct2 [label ="<f0>"];
+ struct2 [label ="<f0>10|<f1>9|<f2>8|<f3>7|<f4>6"];
 }
  subgraph cluster_2 { 
   label="Cola Pagar"; 
- struct3 [label ="<f0>"];
+ struct3 [label ="<f0>Cliente11|<f1>Cliente12|<f2>Cliente13|<f3>Cliente14|<f4>Cliente15"];
 }
  subgraph cluster_3 { 
   label="Cola para Carretas"; 
- struct4 [label ="<f0>Cliente2|<f1>Cliente3|<f2>Cliente4|<f3>Cliente5"];
+ struct4 [label ="<f0>Cliente1|<f1>Cliente2|<f2>Cliente3|<f3>Cliente4|<f4>Cliente5"];
 }
  subgraph cluster_4 { 
  node [shape=record];
@@ -32,8 +32,16 @@ No_Caja_1_Turno8_EstadoLibre -> No_Caja_2_Turno9_EstadoLibre;
  subgraph cluster_5 { 
  node [shape=record];
  label="Lista Compras";
-Cliente1_5 -> Cliente1_5;
-Cliente1_5 -> Cliente1_5;
+Cliente6_11 -> Cliente7_12;
+Cliente7_12 -> Cliente6_11;
+Cliente7_12 -> Cliente8_13;
+Cliente8_13 -> Cliente7_12;
+Cliente8_13 -> Cliente9_14;
+Cliente9_14 -> Cliente8_13;
+Cliente9_14 -> Cliente10_15;
+Cliente10_15 -> Cliente9_14;
+Cliente10_15 -> Cliente6_11;
+Cliente6_11 -> Cliente10_15;
 
 }
 }

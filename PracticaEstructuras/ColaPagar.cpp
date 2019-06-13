@@ -22,9 +22,10 @@ public:
 			return false;
 		}
 	}
-	void insertaDato(string dato) {
+	void insertaDato(string dato,int noCarretass) {
 		NodoColaPagar* nuevo = new NodoColaPagar();
 		nuevo->cliente = dato;
+		nuevo->noCarreta=noCarretass;
 		nuevo->siguiente = NULL;
 		if (estaVacia()) {
 			raiz = nuevo;

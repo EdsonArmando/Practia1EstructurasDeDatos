@@ -1,2 +1,20 @@
-﻿  Menu.cpp
+﻿  pch.cpp
+  ColaCarreta.cpp
+  ColaPagar.cpp
+  ListaDobleCajas.cpp
+  ListaDobleCicularCompras.cpp
+  Menu.cpp
+  NodoCajas.cpp
+  NodoColaCarreta.cpp
+  NodoColaPagar.cpp
+  NodoCirular.cpp
+  NodoCompra.cpp
+  NodoPila2.cpp
+  Nodos.cpp
+  Pila1.cpp
+  Pila2.cpp
+  PracticaEstructuras.cpp
+  Prueba.cpp
+  Generando código...
+c:\users\eg\source\repos\practicaestructuras\practicaestructuras\colacarreta.cpp(91): warning C4715: 'ColaCarreta::extraerCliente': no todas las rutas de acceso de control devuelven un valor
   PracticaEstructuras.vcxproj -> C:\Users\EG\source\repos\PracticaEstructuras\Debug\PracticaEstructuras.exe

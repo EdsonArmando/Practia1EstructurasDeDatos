@@ -57,6 +57,19 @@ public:
 			cont = 1;
 		}
 	}
+	int noCajaDisponible() {
+		NodoCajas *aux = inicios;
+		
+		while (aux != NULL)
+		{
+			if (aux->estado=="Libre") {
+				return aux->numeroCaja;
+			}
+			aux = aux->siguiente;
+		
+		}
+		return 0;
+	}
 	void generarDoc(string datosPila2) {
 		string Cola1 = "\n subgraph cluster_4 { \n node [shape=record];\n label=\"Cajas de Pago\";\n";
 		string compras = "";

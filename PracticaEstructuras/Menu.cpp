@@ -17,7 +17,7 @@ using namespace std;
 class Menu {
 	private:
 		int opcion = 0,cantidaCajas;
-		int indiceCliente,tamanioPila1,tamanioPila2;
+		int indiceCliente,tamanioPila1,tamanioPila2,cliCompran;
 		int cantidadCarretas = 0, ClientesPagando, ClientesComprando;
 		int cliente;
 		int noCarretaTemp;
@@ -38,9 +38,9 @@ public:
 			cout << "Bienvenido al sistema" << endl;
 			cout << "1. CantidadCajas" << endl;
 			cout << "2. Cantidad Carretas Por Pila" << endl;
-			cout << "3. Cantidad Clientes Comprando" << endl;
-			cout << "4. Cantidad Clientes en Cola Pagos" << endl;
-			cout << "5. Cantidad Clientes en Cola Espera Carretas" << endl;
+			cout << "3. Ingrese la cantidad Clientes Cola Carretas" << endl;
+			cout << "4. Ingrese la cantidad Clientes Comprando" << endl;
+			cout << "5. Ingrese cantidad Clientes Cola Pagos" << endl;
 			cout << "6. Ver imagen de la simulacion" << endl;
 			cout << "7. Iniciar Simulacion" << endl;
 			cout << "8. Salir" << endl;
@@ -81,8 +81,25 @@ public:
 				IniciarMenu();
 				break;
 			case 3:
+				cout << "Ingrese la cantidad Clientes Cola Carretas" << endl;
+				cin >> cliente;
+				clientes = clientes + cliente;
+				for (contCliente; contCliente < clientes; contCliente++)
+				{
+					cola1.insertaDato("Cliente" + std::to_string(contCliente + 1));
+				}
+				//cola1.mostrarDatos();
+				IniciarMenu();
+				
+				break;
+			case 4:
 				cout << "Ingrese la cantidad Clientes Comprando" << endl;
 				cin >> ClientesComprando;
+				cliCompran = cliente;
+				for (cliCompran; cliCompran < cliente+ClientesComprando; cliCompran++)
+				{
+					compras.ingresarCompra("Cliente"+std::to_string(cliCompran+1), (cantidadCarretas++)+1);
+				}
 				/*compras.ingresarCompra("Cliente1",5);
 				compras.ingresarCompra("Cliente2",4);
 				compras.ingresarCompra("Cliente3",6);
@@ -93,24 +110,19 @@ public:
 				//compras.mostrarLista();*/
 				IniciarMenu();
 				break;
-			case 4:
+			case 5:
 				cout << "Ingrese cantidad Clientes Cola Pagos" << endl;
 				cin >> ClientesPagando;
+				
+				for (cliCompran; cliCompran < cliente+ ClientesComprando +ClientesPagando;cliCompran++)
+				{
+					cola2.insertaDato("Cliente"+std::to_string(cliCompran+1),(cantidadCarretas++)+1);
+				}
 				/*cola2.insertaDato("Cliente12");
 				cola2.insertaDato("Cliente13");
 				cout << ClientesPagando << endl;*/
 				IniciarMenu();
-				break;
-			case 5:
-				cout << "Ingrese la cantidad Clientes Cola Carretas" << endl;
-				cin >> cliente;
-				clientes = clientes + cliente;
-				for (contCliente; contCliente < clientes; contCliente++)
-				{
-					cola1.insertaDato("Cliente"+std::to_string(contCliente+1));
-				}
-				//cola1.mostrarDatos();
-				IniciarMenu();
+				
 				break;
 			case 6:
 				pila.limpiarVariables();
@@ -133,9 +145,12 @@ public:
 				clienteTemp = compras.sacarCliente(indiceCliente);
 				if (clienteTemp!="") {
 					noCarretaTemp = compras.no_Carreta();
-					cola2.insertaDato(clienteTemp);
-					cajas.modificarCaja(2, cola2.extraerCliente(), noCarretaTemp);
-					pila.apilarNodo(noCarretaTemp);
+					cola2.insertaDato(clienteTemp,noCarretaTemp);
+					int noCaja = cajas.noCajaDisponible();
+					if (noCaja!=0) {
+						cajas.modificarCaja(noCaja, cola2.extraerCliente(), noCarretaTemp);
+						pila.apilarNodo(noCarretaTemp);
+					}
 				}
 				else {
 				

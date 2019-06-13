@@ -6,6 +6,7 @@ using namespace std;
 class NodoColaPagar {
 public:
 	string cliente;
+	int noCarreta;
 	NodoColaPagar *siguiente;
 
 };
