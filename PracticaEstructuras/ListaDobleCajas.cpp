@@ -22,6 +22,7 @@ public:
 		nuevo->estado = estado;
 		nuevo->cliente = cliente;
 		nuevo->noCarreta = noCarreta;
+		nuevo->turnoCliente=0;
 		if (inicios==NULL) {
 			inicios = nuevo;
 			inicios->anterior = NULL;
@@ -43,18 +44,43 @@ public:
 			fins = NULL;
 		}
 	}
-	void modificarCaja(int noCaja,string cliente,int noCarreta) {
+	bool verificarTurno() {
+		bool verificarTurno=false;
 		NodoCajas *aux = inicios;
 		int cont = 0;
+		while (aux != NULL)
+		{
+			if (aux->turno==aux->turnoCliente) {
+				aux->estado = "Libre";
+				aux->cliente = "NA";
+				aux->noCarreta = 0;
+				verificarTurno = true;
+			}
+			aux = aux->siguiente;
+		}
+		return verificarTurno;
+	}
+	void modificarCaja(int noCaja,string cliente,int noCarreta,int turnoCliente) {
+		NodoCajas *aux = inicios;
 		while (aux != NULL)
 		{
 			if (aux->numeroCaja==noCaja) {
 				aux->cliente = cliente;
 				aux->noCarreta = noCarreta;
 				aux->estado = "Ocupado";
+				aux->turnoCliente = turnoCliente;
 			}
 			aux = aux->siguiente;
-			cont = 1;
+		}
+	}
+	void aumentarTurno() {
+		NodoCajas *aux = inicios;
+		while (aux != NULL)
+		{
+			if (aux->estado == "Ocupado") {
+				aux->turnoCliente = aux->turnoCliente++;
+			}
+			aux = aux->siguiente;
 		}
 	}
 	int noCajaDisponible() {
@@ -79,13 +105,13 @@ public:
 		while (aux != NULL)
 		{
 			if (aux->numeroCaja!=1) {
-				compras += "No_Caja_"+std::to_string(aux->numeroCaja)+"_Turno"+ std::to_string(aux->turno)+"_Estado"+aux->estado;
+				compras += "No_Caja_"+std::to_string(aux->numeroCaja)+"_Turno"+ std::to_string(aux->turno)+"_Estado"+aux->estado+"_Cliente"+aux->cliente;
 				compras += " -> ";
-				compras += "No_Caja_"+std::to_string(aux->siguiente->numeroCaja)+"_Turno"+ std::to_string(aux->siguiente->turno)+"_Estado"+ aux->siguiente->estado;
+				compras += "No_Caja_"+std::to_string(aux->siguiente->numeroCaja)+"_Turno"+ std::to_string(aux->siguiente->turno)+"_Estado"+aux->siguiente->estado+"_Cliente"+aux->siguiente->cliente;
 				compras += ";\n";
-				compras += "No_Caja_"+std::to_string(aux->siguiente->numeroCaja)+"_Turno"+ std::to_string(aux->siguiente->turno)+"_Estado"+aux->siguiente->estado;
+				compras += "No_Caja_"+std::to_string(aux->siguiente->numeroCaja)+"_Turno"+ std::to_string(aux->siguiente->turno)+"_Estado"+aux->siguiente->estado+"_Cliente"+aux->siguiente->cliente;
 				compras += " -> ";
-				compras += "No_Caja_"+std::to_string(aux->numeroCaja)+"_Turno"+ std::to_string(aux->turno)+"_Estado"+aux->estado;
+				compras += "No_Caja_"+std::to_string(aux->numeroCaja)+"_Turno"+ std::to_string(aux->turno)+"_Estado"+aux->estado+"_Cliente"+aux->cliente;
 				compras += ";\n";
 			}
 			aux = aux->siguiente;

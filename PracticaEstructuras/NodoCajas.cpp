@@ -8,6 +8,7 @@ class NodoCajas
 public:
 	int numeroCaja;
 	int turno;
+	int turnoCliente;
 	string estado;
 	string cliente;
 	int noCarreta;

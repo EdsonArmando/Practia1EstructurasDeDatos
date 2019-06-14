@@ -19,7 +19,8 @@ class Menu {
 		int opcion = 0,cantidaCajas;
 		int indiceCliente,tamanioPila1,tamanioPila2,cliCompran;
 		int cantidadCarretas = 0, ClientesPagando, ClientesComprando;
-		int cliente;
+		int cliente, turnos = 0;
+		int a;
 		int noCarretaTemp;
 		string clienteTemp;
 		Prueba p;
@@ -36,11 +37,13 @@ public:
 		void IniciarMenu() {
 
 			cout << "Bienvenido al sistema" << endl;
-			cout << "1. CantidadCajas" << endl;
-			cout << "2. Cantidad Carretas Por Pila" << endl;
+			if (turnos==0) {
+				cout << "1. CantidadCajas" << endl;
+				cout << "2. Cantidad Carretas Por Pila" << endl;
+				cout << "4. Ingrese la cantidad Clientes Comprando" << endl;
+				cout << "5. Ingrese cantidad Clientes Cola Pagos" << endl;
+			}
 			cout << "3. Ingrese la cantidad Clientes Cola Carretas" << endl;
-			cout << "4. Ingrese la cantidad Clientes Comprando" << endl;
-			cout << "5. Ingrese cantidad Clientes Cola Pagos" << endl;
 			cout << "6. Ver imagen de la simulacion" << endl;
 			cout << "7. Iniciar Simulacion" << endl;
 			cout << "8. Salir" << endl;
@@ -56,9 +59,9 @@ public:
 				cin >> cantidaCajas;
 				for (int i = 0; i < cantidaCajas;i++) {
 					int a = rand() % 11;
-					cajas.insertarCaja(i+1, a, "Libre", "", 0);
+					cajas.insertarCaja(i+1, a, "Libre", "NA", 0);
 				}
-				cajas.mostrarLista();
+				//cajas.mostrarLista();
 				IniciarMenu();
 				break;
 			case 2:
@@ -78,19 +81,26 @@ public:
 				pila.mostrarLista();
 				cout << "Ingrese la cantidad Carretas pila2" << endl;
 				pila2.mostrarLista();*/
+
 				IniciarMenu();
 				break;
 			case 3:
+				
 				cout << "Ingrese la cantidad Clientes Cola Carretas" << endl;
 				cin >> cliente;
-				clientes = clientes + cliente;
-				for (contCliente; contCliente < clientes; contCliente++)
-				{
-					cola1.insertaDato("Cliente" + std::to_string(contCliente + 1));
+				if (turnos==0) {
+					clientes = clientes + cliente;
+					for (contCliente; contCliente < clientes; contCliente++)
+					{
+						cola1.insertaDato("Cliente" + std::to_string(contCliente + 1));
+					}
 				}
-				//cola1.mostrarDatos();
-				IniciarMenu();
+				else if (turnos>0) {
+					
+				}
 				
+				IniciarMenu();
+				//cola1.mostrarDatos();
 				break;
 			case 4:
 				cout << "Ingrese la cantidad Clientes Comprando" << endl;
@@ -132,31 +142,12 @@ public:
 				IniciarMenu();
 				break;
 			case 7:
-			    indiceCliente = rand() % 99;
-				tamanioPila1 = pila.getTamanio();
-				tamanioPila2 = pila2.getTamanio();
-				if (tamanioPila1!=0) {
-					cout << tamanioPila1 << endl;
-					compras.ingresarCompra(cola1.extraerCliente(), pila.retirar());
-				}
-				else if(tamanioPila2!=0) {
-					compras.ingresarCompra(cola1.extraerCliente(), pila2.retirar());
-				}
-				clienteTemp = compras.sacarCliente(indiceCliente);
-				if (clienteTemp!="") {
-					noCarretaTemp = compras.no_Carreta();
-					cola2.insertaDato(clienteTemp,noCarretaTemp);
-					int noCaja = cajas.noCajaDisponible();
-					if (noCaja!=0) {
-						cajas.modificarCaja(noCaja, cola2.extraerCliente(), noCarretaTemp);
-						pila.apilarNodo(noCarretaTemp);
-					}
-				}
-				else {
-				
-				}
-				ClientesComprando--;
-				IniciarMenu();
+				cout << "Desea ingresar mas Clientes" << endl;
+				cin >> cliente;
+				ingresarClientes();
+				turnos++;
+				simulacion();
+			
 				//Dar Carreta a un cliente para pasar a compras
 				/*compras.ingresarCompra("Cliente4", 2);
 				compras.ingresarCompra("Cliente5", 1);
@@ -176,5 +167,62 @@ public:
 			default:
 				break;
 			}
+		}
+		void ingresarClientes() {
+			clientes = clientes + cliente;
+			for (cliCompran; cliCompran < clientes + ClientesComprando + ClientesPagando; cliCompran++)
+			{
+				cola1.insertaDato("Cliente" + std::to_string(cliCompran + 1));
+			}
+		}
+		void simulacion() {
+			a = rand() % 2;
+			indiceCliente = rand() % 15;
+			tamanioPila1 = pila.getTamanio();
+			tamanioPila2 = pila2.getTamanio();
+			if (tamanioPila1 != 0 && a == 0) {
+				cout << tamanioPila1 << endl;
+				compras.ingresarCompra(cola1.extraerCliente(), pila.retirar());
+			}
+			else if (tamanioPila2 != 0 && a == 1) {
+				compras.ingresarCompra(cola1.extraerCliente(), pila2.retirar());
+			}
+			clienteTemp = compras.sacarCliente(indiceCliente);
+			if (clienteTemp != "") {
+				noCarretaTemp = compras.no_Carreta();
+				cola2.insertaDato(clienteTemp, noCarretaTemp);
+				int noCaja = cajas.noCajaDisponible();
+				if (noCaja != 0) {
+
+					cajas.modificarCaja(noCaja, cola2.extraerCliente(), noCarretaTemp, 1);
+					cajas.aumentarTurno();
+					if (a == 0) {
+						pila.apilarNodo(noCarretaTemp);
+					}
+					else if (a == 1) {
+						pila2.apilarNodo(noCarretaTemp);
+					}
+
+				}
+			}
+			else {
+				int noCaja = cajas.noCajaDisponible();
+				if (noCaja != 0) {
+
+					cajas.modificarCaja(noCaja, cola2.extraerCliente(), noCarretaTemp, 1);
+					cajas.aumentarTurno();
+					if (cajas.verificarTurno() == true) {
+						if (a == 0) {
+							pila.apilarNodo(noCarretaTemp);
+						}
+						else if (a == 1) {
+							pila2.apilarNodo(noCarretaTemp);
+						}
+					}
+				}
+			}
+			ClientesComprando--;
+			
+			IniciarMenu();
 		}
 };

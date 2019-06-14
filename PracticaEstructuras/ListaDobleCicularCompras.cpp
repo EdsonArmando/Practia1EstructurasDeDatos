@@ -98,7 +98,6 @@ public:
 				compras += " -> ";
 				compras += aux->cliente+"_"+std::to_string(aux->noCarreta);
 				compras += ";\n";
-			cout << aux->noCarreta << endl;
 			aux = aux->siguiente;
 		} while (aux != primerod);
 
